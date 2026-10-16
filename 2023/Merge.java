@@ -19,6 +19,7 @@ public class Merge {
     }
 
     public void lire(String chemin, String sortie) {
+
         try (BufferedReader br = new BufferedReader(new FileReader(chemin))) {
 
             String ligne;
@@ -26,12 +27,9 @@ public class Merge {
                 BufferedImage img = ImageIO.read(new File(ligne));
 
                 if (img != null) {
-                    largeur += img.getWidth();
-
-                    if (img.getHeight() > hauteur) {
-                        hauteur = img.getHeight();
-                    }
-                }
+                    largeur = img.getWidth() ;
+                    hauteur = img.getHeight();    
+                }   
             }
 
         } catch (IOException e) {
@@ -45,7 +43,6 @@ public class Merge {
 
         Graphics2D g2d = imgMerge.createGraphics();
 
-        int positionX = 0;
 
         try (BufferedReader br = new BufferedReader(new FileReader(chemin))) {
 
@@ -55,8 +52,8 @@ public class Merge {
                 BufferedImage img = ImageIO.read(new File(ligne));
 
                 if (img != null) {
-                    g2d.drawImage(img, positionX, 0, null);
-                    positionX += img.getWidth();
+                    merge(img);
+                   
                 }
             }
 
@@ -71,6 +68,33 @@ public class Merge {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public BufferedImage merge(BufferedImage img)
+    {
+        if (imgMerge == null)
+        {
+            largeur = img.getWidth();
+            hauteur = img.getHeight();
+
+            imgMerge = new BufferedImage(
+                largeur, hauteur, BufferedImage.TYPE_INT_RGB
+            );
+        }
+
+        for (int x = 0; x < largeur; x++)
+        {
+            for (int y = 0; y < hauteur; y++)
+            {
+                int couleur = img.getRGB(x, y) & 0x00FFFFFF;
+                if (couleur != 0xFFFFFF)
+                {
+                    imgMerge.setRGB(x, y, couleur);
+                }
+            }
+        }
+
+        return imgMerge;
     }
 
     public static void main(String[] args) {
