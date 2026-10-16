@@ -1,0 +1,17 @@
+<codage>
+		<parametre>
+			<hauteur>110</hauteur>
+			<largeur>100</largeur>
+		</parametre>
+
+	
+	<deplacement>
+		<case x="8" y="2" />
+		<case x="7" y="0" />
+		<case x="7" y="4" />
+		<case x="7" y="5" />
+		<case x="3" y="2" />
+	</deplacement>		
+		
+
+</codage>
