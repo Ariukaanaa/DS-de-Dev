@@ -71,24 +71,20 @@ public class ConvertirImage {
         }
 
        
+        BufferedImage temp = list[lstCoord.get(0).y()][lstCoord.get(0).x()];
 
-        if (lstCoord.size() >= 5) {
-            Coord c0 = lstCoord.get(0);
-            Coord c1 = lstCoord.get(1);
-            Coord c2 = lstCoord.get(2);
-            Coord c3 = lstCoord.get(3);
-            Coord c4 = lstCoord.get(4);
+        for (int i = 0; i < lstCoord.size() - 1 ; i++) {
 
-            
-            BufferedImage temp = list[c0.y()][c0.x()];
+            Coord c1 = lstCoord.get(i);
+            Coord c2 = lstCoord.get(i + 1);
 
-            // Солилтууд
-            list[c0.y()][c0.x()] = list[c1.y()][c1.x()];
             list[c1.y()][c1.x()] = list[c2.y()][c2.x()];
-            list[c2.y()][c2.x()] = list[c3.y()][c3.x()];
-            list[c3.y()][c3.x()] = list[c4.y()][c4.x()];
-            list[c4.y()][c4.x()] = temp;
-        } 
+        }
+
+        Coord last = lstCoord.get(lstCoord.size() - 1);
+        list[last.y()][last.x()] = temp;
+
+        
 
         BufferedImage imgDest = new BufferedImage(largeurOrigine, hauteurOrigine, BufferedImage.TYPE_INT_RGB);
         Graphics2D g2d = imgDest.createGraphics();
